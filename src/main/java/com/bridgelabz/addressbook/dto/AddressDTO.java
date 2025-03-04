@@ -2,8 +2,7 @@ package com.bridgelabz.addressbook.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
