@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,9 +21,11 @@ public class AddressBookController {
     private AddressBookService service;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addAddress(@RequestBody AddressDTO addressDTO) {
-        return ResponseEntity.ok(service.addAddress(addressDTO));
+    public ResponseEntity<Map<String, Object>> addAddress(@RequestBody AddressDTO addressDTO) {
+        return ResponseEntity.ok(service.addAddress(addressDTO));  // ✅ Returns JSON response
     }
+
+
 
     @GetMapping("/all")
     public ResponseEntity<List<Address>> getAllAddresses() {

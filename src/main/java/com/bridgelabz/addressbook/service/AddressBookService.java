@@ -6,7 +6,9 @@ import com.bridgelabz.addressbook.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -15,20 +17,28 @@ public class AddressBookService {
     @Autowired
     private AddressRepository repository;
 
-    public String addAddress(AddressDTO addressDTO) {
-        Address address = new Address(
-                null,
-                addressDTO.getName(),
-                addressDTO.getPhone(),
-                addressDTO.getEmail(),
-                addressDTO.getAddress(),
-                addressDTO.getCity(),
-                addressDTO.getState(),
-                addressDTO.getZipcode()
-        );
-        repository.save(address);
-        return "Stored Address: " + address.toString();
+    private Address convertToEntity(AddressDTO addressDTO) {
+        Address address = new Address();
+        address.setName(addressDTO.getName());
+        address.setPhone(addressDTO.getPhone());
+        address.setEmail(addressDTO.getEmail());
+        address.setAddress(addressDTO.getAddress());
+        address.setCity(addressDTO.getCity());
+        address.setState(addressDTO.getState());
+        address.setZipcode(addressDTO.getZipcode());
+        return address;
     }
+
+    public Map<String, Object> addAddress(AddressDTO addressDTO) {
+        Address savedAddress = repository.save(convertToEntity(addressDTO));
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Contact added successfully");
+        response.put("contact", savedAddress);
+
+        return response; // ✅ Return a JSON object instead of just a string
+    }
+
 
     public List<Address> getAllAddresses() {
         return repository.findAll();

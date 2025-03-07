@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name= "address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
