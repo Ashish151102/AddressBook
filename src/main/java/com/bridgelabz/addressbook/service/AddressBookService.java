@@ -13,7 +13,16 @@ public class AddressBookService {
     private long idCounter = 1; // Simulating auto-increment ID
 
     public String addAddress(AddressDTO addressDTO) {
-        Address address = new Address(idCounter++, addressDTO.getName(), addressDTO.getPhone(), addressDTO.getEmail());
+        Address address = new Address(
+                idCounter++,
+                addressDTO.getName(),
+                addressDTO.getPhone(),
+                addressDTO.getEmail(),
+                addressDTO.getAddress(),  // New field
+                addressDTO.getCity(),     // New field
+                addressDTO.getState(),    // New field
+                addressDTO.getZipcode()   // New field
+        );
         addressBook.add(address);
         return "Stored Address: " + address.toString();
     }
@@ -40,6 +49,10 @@ public class AddressBookService {
                 address.setName(addressDTO.getName());
                 address.setPhone(addressDTO.getPhone());
                 address.setEmail(addressDTO.getEmail());
+                address.setAddress(addressDTO.getAddress());  // New field update
+                address.setCity(addressDTO.getCity());        // New field update
+                address.setState(addressDTO.getState());      // New field update
+                address.setZipcode(addressDTO.getZipcode());  // New field update
                 return "Updated Address: " + address;
             }
         }

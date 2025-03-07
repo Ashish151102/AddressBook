@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/addressbook")
+@CrossOrigin(origins = "http://localhost:4200") // Allow Angular frontend to access this API
 public class AddressBookController {
 
     @Autowired
