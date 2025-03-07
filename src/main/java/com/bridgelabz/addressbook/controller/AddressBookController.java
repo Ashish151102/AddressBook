@@ -40,12 +40,23 @@ public class AddressBookController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateAddress(@PathVariable long id, @RequestBody AddressDTO addressDTO) {
-        return ResponseEntity.ok(service.updateAddress(id, addressDTO));
+    public ResponseEntity<Map<String, String>> updateAddress(@PathVariable long id, @RequestBody AddressDTO addressDTO) {
+        String message = service.updateAddress(id, addressDTO);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+
+        return ResponseEntity.ok(response);
     }
 
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAddress(@PathVariable long id) {
-        return ResponseEntity.ok(service.deleteAddress(id));
+    public ResponseEntity<Map<String, String>> deleteAddress(@PathVariable long id) {
+        String message = service.deleteAddress(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+
+        return ResponseEntity.ok(response);
     }
+
 }
