@@ -1,10 +1,14 @@
 package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.dto.AddressDTO;
+import com.bridgelabz.addressbook.model.Address;
 import com.bridgelabz.addressbook.service.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/addressbook")
@@ -20,13 +24,15 @@ public class AddressBookController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<String> getAllAddresses() {
+    public ResponseEntity<List<Address>> getAllAddresses() {
         return ResponseEntity.ok(service.getAllAddresses());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getAddressById(@PathVariable long id) {
-        return ResponseEntity.ok(service.getAddressById(id));
+    public ResponseEntity<?> getAddressById(@PathVariable long id) {
+        Optional<Address> address = service.getAddressById(id);
+        return address.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/update/{id}")
